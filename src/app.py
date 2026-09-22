@@ -32,9 +32,13 @@ def flight_by_id():
     return render_template("flight_by_id.html", results=results, flight_id=flight_id)
 
 
+DATASET_YEAR = 2015
+
+
 @app.route("/by-date")
 def flights_by_date():
     date_str = request.args.get("date", "").strip()
+    display_date = date_str or f"{DATASET_YEAR}-01-01"
     results = None
     if date_str:
         try:
@@ -44,7 +48,9 @@ def flights_by_date():
                 flash(f"Keine Flüge am {date_str} gefunden.")
         except ValueError:
             flash("Bitte ein gültiges Datum eingeben.")
-    return render_template("flights_by_date.html", results=results, date=date_str)
+    return render_template(
+        "flights_by_date.html", results=results, date=display_date, dataset_year=DATASET_YEAR
+    )
 
 
 @app.route("/delayed/airline")

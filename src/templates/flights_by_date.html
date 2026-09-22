@@ -2,10 +2,12 @@
 {% block title %}SKY SQL &ndash; Nach Datum{% endblock %}
 {% block content %}
   <h1>Flüge nach Datum suchen</h1>
+  <p class="hint">Der Datensatz deckt nur das Jahr {{ dataset_year }} ab &ndash; andere Jahre liefern keine Ergebnisse.</p>
 
   <form class="search-form" method="get">
     <label for="date">Datum</label>
-    <input type="date" id="date" name="date" value="{{ date }}" required>
+    <input type="date" id="date" name="date" value="{{ date }}"
+           min="{{ dataset_year }}-01-01" max="{{ dataset_year }}-12-31" required>
     <button type="submit">Suchen</button>
   </form>
 
