@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .env
 .idea/
+
+# CSV files exported from the app
+*.csv

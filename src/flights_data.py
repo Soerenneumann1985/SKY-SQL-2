@@ -1,11 +1,6 @@
-from sqlalchemy import create_engine, text
-import json
-
-
 import os
-print("Arbeitsverzeichnis:", os.getcwd())
-print("Existiert die DB-Datei?", os.path.exists("data/flights.sqlite3"))
-
+import json
+from sqlalchemy import create_engine, text
 
 QUERY_FLIGHT_BY_ID = ("SELECT flights.*, airlines.airline as AIRLINE, flights.ID as FLIGHT_ID, "
                       "flights.DEPARTURE_DELAY as DELAY "
@@ -20,8 +15,10 @@ FROM airlines
 ORDER BY AIRLINE ASC
 """
 
-# Define the database URL
-DATABASE_URL = "sqlite:///data/flights.sqlite3"
+# Database file lives in <project root>/data/flights.sqlite3, resolved relative
+# to this file so the app runs correctly no matter what the working directory is.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'data', 'flights.sqlite3')}"
 
 # Create the engine
 engine = create_engine(DATABASE_URL)
@@ -63,10 +60,7 @@ def get_flights_by_date(day, month, year):
         "WHERE flights.DAY = :day AND flights.MONTH = :month AND flights.YEAR = :year"
     )
     params = {"day": str(day), "month": str(month), "year": str(year)}
-    print("Eingabe params:", params)          # <-- neu
-    rows = execute_query(query, params)
-    print("Anzahl Ergebnisse:", len(rows))   # <-- neu
-    return rows
+    return execute_query(query, params)
 
 
 
@@ -118,13 +112,3 @@ if __name__ == "__main__":
             print(json.dumps(dict(row), indent=4))
     else:
         print("No delayed flights found for this airline")
-
-
-
-
-
-
-
-
-
-    
