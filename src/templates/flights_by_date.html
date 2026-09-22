@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}SKY SQL &ndash; Nach Datum{% endblock %}
+{% block content %}
+  <h1>Flüge nach Datum suchen</h1>
+
+  <form class="search-form" method="get">
+    <label for="date">Datum</label>
+    <input type="date" id="date" name="date" value="{{ date }}" required>
+    <button type="submit">Suchen</button>
+  </form>
+
+  {% set kind = "date" %}
+  {% set export_params = {"date": date} %}
+  {% include "_results_table.html" %}
+{% endblock %}

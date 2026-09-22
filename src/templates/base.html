@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SKY SQL{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="{{ url_for('index') }}">&#9992;&#65039; SKY SQL</a>
+    <nav>
+      <a href="{{ url_for('flight_by_id') }}">Flug-ID</a>
+      <a href="{{ url_for('flights_by_date') }}">Nach Datum</a>
+      <a href="{{ url_for('delayed_by_airline') }}">Airline-Verspätungen</a>
+      <a href="{{ url_for('delayed_by_airport') }}">Flughafen-Verspätungen</a>
+    </nav>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>SKY SQL &mdash; Flugdaten-Explorer</p>
+  </footer>
+</body>
+</html>
