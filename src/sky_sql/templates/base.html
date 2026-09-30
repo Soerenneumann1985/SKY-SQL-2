@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="SKY SQL – US-Flugdaten 2015 durchsuchen und als CSV exportieren.">
+  <title>{% block title %}SKY SQL{% endblock %}</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#content">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <a class="logo" href="{{ url_for('index') }}"><span aria-hidden="true">✈</span> SKY SQL</a>
+    {% set nav = [
+      ("flight_by_id", "Flug-ID"),
+      ("flights_by_date", "Nach Datum"),
+      ("delayed_by_airline", "Airline-Verspätungen"),
+      ("delayed_by_airport", "Flughafen-Verspätungen"),
+    ] %}
+    <nav aria-label="Hauptnavigation">
+      {% for endpoint, label in nav %}
+        <a href="{{ url_for(endpoint) }}"
+           {% if request.endpoint == endpoint %}aria-current="page"{% endif %}>{{ label }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <main id="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-list" role="status">
+          {% for category, message in messages %}
+            <p class="flash flash-{{ category }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>SKY SQL &mdash; Flugdaten-Explorer &middot; Datensatz {{ dataset_year }}</p>
+  </footer>
+</body>
+</html>

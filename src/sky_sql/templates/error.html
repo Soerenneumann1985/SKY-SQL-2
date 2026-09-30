@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}SKY SQL &ndash; Fehler{% endblock %}
+{% block content %}
+  <section class="hero">
+    <h1>Da ist etwas schiefgelaufen</h1>
+    <p class="lead">{{ message }}</p>
+    <a class="btn" href="{{ url_for('index') }}">Zur Startseite</a>
+  </section>
+{% endblock %}
