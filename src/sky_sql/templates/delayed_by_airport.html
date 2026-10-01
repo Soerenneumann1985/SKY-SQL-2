@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}SKY SQL &ndash; Flughafen-Verspätungen{% endblock %}
+{% block content %}
+  <h1>Verspätete Flüge nach Abflughafen</h1>
+  <p class="lead">Zeigt die {{ delayed_limit }} am stärksten verspäteten Flüge (&ge; {{ min_delay }} Min.) ab einem Flughafen.</p>
+
+  <form class="search-form" method="get" role="search">
+    <div class="field">
+      <label for="airport">IATA-Flughafencode</label>
+      <input type="text" id="airport" name="airport" list="airport-options" autocomplete="off"
+             value="{{ query }}" placeholder="z. B. LAX" maxlength="3" pattern="[A-Za-z]{3}"
+             title="3-stelliger IATA-Code" required autofocus>
+      <datalist id="airport-options">
+        {% for a in airports %}<option value="{{ a.code }}">{{ a.name }}, {{ a.city }}</option>{% endfor %}
+      </datalist>
+    </div>
+    <button type="submit">Suchen</button>
+  </form>
+
+  {% include "_results_table.html" %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% if results %}
+  <section class="results" aria-labelledby="results-heading">
+    <div class="results-header">
+      <h2 id="results-heading">{{ results|length }} Ergebnis{{ "se" if results|length != 1 }}</h2>
+      <a class="btn btn-secondary" href="{{ url_for('export_csv', kind=kind, **export_params) }}" download>
+        CSV exportieren
+      </a>
+    </div>
+    <div class="table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th scope="col">Flug-ID</th>
+            <th scope="col">Airline</th>
+            <th scope="col">Von</th>
+            <th scope="col">Nach</th>
+            <th scope="col" class="num">Verspätung</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for flight in results %}
+            <tr>
+              <td>{{ flight.flight_id }}</td>
+              <td>{{ flight.airline }}</td>
+              <td><span class="code">{{ flight.origin }}</span></td>
+              <td><span class="code">{{ flight.destination }}</span></td>
+              <td class="num">
+                {% if flight.is_delayed %}
+                  <span class="badge badge-delayed">+{{ flight.delay }} min</span>
+                {% else %}
+                  <span class="badge badge-ontime">pünktlich</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endif %}

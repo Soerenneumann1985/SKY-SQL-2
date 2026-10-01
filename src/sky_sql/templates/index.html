@@ -1,23 +1,29 @@
 {% extends "base.html" %}
 {% block title %}SKY SQL &ndash; Start{% endblock %}
 {% block content %}
-  <h1>Flugdaten durchsuchen</h1>
-  <p class="lead">Wähle eine Suche aus, um Flugdaten aus der Datenbank abzufragen.</p>
+  <section class="hero">
+    <h1>Flugdaten durchsuchen</h1>
+    <p class="lead">Knapp eine Million US-Inlandsflüge aus {{ dataset_year }} &ndash; wähle eine Suche aus.</p>
+  </section>
 
   <div class="card-grid">
     <a class="card" href="{{ url_for('flight_by_id') }}">
+      <span class="card-icon" aria-hidden="true">#</span>
       <h2>Flug-ID</h2>
       <p>Details zu einem einzelnen Flug per ID nachschlagen.</p>
     </a>
     <a class="card" href="{{ url_for('flights_by_date') }}">
+      <span class="card-icon" aria-hidden="true">📅</span>
       <h2>Nach Datum</h2>
       <p>Alle Flüge eines bestimmten Tages anzeigen.</p>
     </a>
     <a class="card" href="{{ url_for('delayed_by_airline') }}">
+      <span class="card-icon" aria-hidden="true">🛫</span>
       <h2>Airline-Verspätungen</h2>
       <p>Die am stärksten verspäteten Flüge einer Airline finden.</p>
     </a>
     <a class="card" href="{{ url_for('delayed_by_airport') }}">
+      <span class="card-icon" aria-hidden="true">🏢</span>
       <h2>Flughafen-Verspätungen</h2>
       <p>Die am stärksten verspäteten Flüge ab einem Flughafen finden.</p>
     </a>

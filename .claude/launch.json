@@ -4,7 +4,7 @@
     {
       "name": "sky-sql-web",
       "runtimeExecutable": ".venv/Scripts/python.exe",
-      "runtimeArgs": ["src/app.py"],
+      "runtimeArgs": ["-m", "sky_sql", "web"],
       "port": 5000
     }
   ]
